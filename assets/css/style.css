@@ -581,3 +581,11 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .cinfo .cblock a.v:hover{color:var(--orange-deep)}
 .mapframe{width:100%;border:1px solid var(--line-d);filter:grayscale(.25);line-height:0}
 .mapframe iframe{display:block;width:100%}
+
+/* ---- Hero des pages internes (.phero) : contenu centré ---- */
+.phero .wrap{text-align:center}
+.phero .crumb{justify-content:center}
+.phero .pk{justify-content:center}
+.phero h1{margin-left:auto;margin-right:auto}
+.phero .sub{margin-left:auto;margin-right:auto}
+.phero .hero-cta{justify-content:center}
