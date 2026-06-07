@@ -678,3 +678,8 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .cfg .zoneout{margin-top:11px;min-height:1.1em;font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.03em;color:var(--steel)}
 .cfg .zoneout.ok{color:var(--bone)}
 .cfg .zoneout b{color:var(--orange);font-weight:700}
+
+/* ---- Bloc hero cantilever : photo portrait affichée en intégralité ---- */
+.mediaframe.cover.fit{display:flex;align-items:center;justify-content:center;background:#fff}
+.mediaframe.cover.fit .mi{width:auto;max-width:100%;height:auto;max-height:580px;object-fit:contain;padding:0;mix-blend-mode:normal}
+@media(max-width:760px){.mediaframe.cover.fit .mi{max-height:460px}}
