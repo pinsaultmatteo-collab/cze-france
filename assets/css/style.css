@@ -642,3 +642,15 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .cant-visuals .cv img{display:block;width:100%;height:360px;object-fit:contain;background:#fff;border:1px solid var(--line-d);padding:20px}
 .cant-visuals .cv figcaption{font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-d);margin-top:12px;text-align:center}
 @media(max-width:760px){.cant-visuals{grid-template-columns:1fr}.cant-visuals .cv img{height:300px}}
+
+/* ---- Boutons à l'intérieur d'un bloc .prose : forcer texte blanc lisible ---- */
+.prose a.btn,.prose a.btn:hover,.prose a.btn span{color:#fff;text-decoration:none}
+.prose a.btn.ghost{color:var(--ink)}
+.prose a.btn.ghost span{color:var(--ink)}
+
+/* ---- Pages légales ---- */
+.legaldoc{max-width:860px;margin:0 auto}
+.legaldoc h2{font-size:clamp(1.5rem,2.6vw,2rem);margin-top:46px}
+.legaldoc h3{font-size:1.15rem;margin-top:26px}
+.legaldoc p,.legaldoc li{font-size:1rem}
+.legaldoc .upd{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-d);margin-bottom:30px}
