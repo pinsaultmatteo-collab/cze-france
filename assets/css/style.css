@@ -692,3 +692,62 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .lb-close{position:absolute;top:22px;right:26px;width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;font-size:1.7rem;line-height:1;cursor:pointer;border-radius:50%;transition:.3s var(--ease)}
 .lb-close:hover{background:var(--orange);border-color:var(--orange)}
 .lb-hint{position:absolute;bottom:24px;left:0;right:0;text-align:center;font-family:'JetBrains Mono';font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+
+/* ===================== RESPONSIVE MOBILE — HOME (≤760px) ===================== */
+@media(max-width:760px){
+  /* 1. Hero : tout le texte centré */
+  .hero-text{text-align:center}
+  .hero .hk{justify-content:center}
+  .hero .lead{margin-left:auto;margin-right:auto}
+  .hero-cta{justify-content:center}
+  /* 2. Hero : les 3 encadrés sur une seule ligne */
+  .hchips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .hchips .chip{min-width:0;padding:10px 6px;gap:2px;text-align:center;align-items:center}
+  .hchips .chip .v{font-size:.78rem;line-height:1.15}
+  .hchips .chip .k{font-size:.5rem;letter-spacing:.05em}
+
+  /* 3. Bandeau défilant "cibles" : un peu plus rapide */
+  .marquee{animation-duration:18s}
+
+  /* 4. Stats : texte centré */
+  .stat{text-align:center;padding:0 10px}
+  .stat .l{margin-left:auto;margin-right:auto}
+
+  /* 5. Livraison : zones en 2 colonnes de 3 + bouton centré */
+  .zones{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:10px}
+  .zrow{grid-template-columns:1fr;gap:5px;justify-items:center;text-align:center}
+  .zlabel{width:100%;padding:9px 6px;font-size:.82rem}
+  .zprice{font-size:1rem}
+  .zfoot{flex-direction:column;align-items:center;text-align:center;gap:6px}
+  .livraison .btn{display:flex;width:fit-content;margin-left:auto;margin-right:auto}
+
+  /* 6. Clients : mosaïque empilée (3/ligne), sans défilement */
+  .clients .logos{animation:none;width:auto;flex-wrap:wrap;justify-content:center;gap:10px}
+  .clients .logos .chip{flex:0 0 30%;width:auto;height:72px;padding:12px}
+  .clients .logos .chip:nth-child(n+11){display:none}
+
+  /* 7. Groupe : photo de la mini-pelle remontée sous le titre/sous-titre */
+  .ggrid{display:flex;flex-direction:column;gap:0}
+  .gtext{display:contents}
+  .ggrid .gtag{order:1}
+  .ggrid h2{order:2}
+  .ggrid .gsub{order:3}
+  .ggrid .gvis{order:4;margin:4px 0 28px}
+  .ggrid .gdesc{order:5}
+  .ggrid .gstats{order:6}
+  .ggrid .btn{order:7}
+  .gvis .gimg{height:300px}
+
+  /* 8. CTA "Parlons de votre projet" : texte + bouton centrés */
+  .cta .wrap{text-align:center}
+  .cta .wrap>div{display:flex;flex-direction:column;align-items:center}
+  .cta .wrap>div .btn{margin-left:auto;margin-right:auto}
+  .cta .info a{align-items:center;text-align:center}
+
+  /* 9. Footer : éléments centrés */
+  .fgrid{grid-template-columns:1fr;gap:34px;text-align:center}
+  .fcol{display:flex;flex-direction:column;align-items:center}
+  .fcol .brand{justify-content:center}
+  .fbar{flex-direction:column;text-align:center;gap:12px}
+  .fbar .legal{justify-content:center;flex-wrap:wrap;gap:12px 20px}
+}
