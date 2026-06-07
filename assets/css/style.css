@@ -591,20 +591,26 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .phero .hero-cta{justify-content:center}
 
 /* ---- Bloc Livraison en France ---- */
-.livraison .liv-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center;margin-top:10px}
-.liv-map{position:relative;border:1px solid var(--line);background:#fff;padding:26px}
-.liv-map::before{content:"";position:absolute;top:0;left:0;width:48px;height:48px;border-top:2px solid var(--orange);border-left:2px solid var(--orange)}
-.liv-map::after{content:"";position:absolute;bottom:0;right:0;width:48px;height:48px;border-bottom:2px solid var(--orange);border-right:2px solid var(--orange)}
-.liv-map img{display:block;width:100%;height:auto}
+.livraison .liv-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;margin-top:10px}
+.liv-map{position:relative;background:radial-gradient(60% 55% at 50% 45%,rgba(255,255,255,.07),transparent 72%)}
+.liv-map img{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.45))}
 .liv-h2{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(1.9rem,3.4vw,2.9rem);letter-spacing:-.02em;line-height:1.05;color:#fff}
 .liv-h2 em{font-style:normal;color:var(--orange)}
-.liv-sub{font-size:1.05rem;line-height:1.65;margin:16px 0 28px;max-width:40em;color:var(--steel)}
+.liv-sub{font-size:1.05rem;line-height:1.65;margin:16px 0 30px;max-width:42em;color:var(--steel)}
 .liv-sub b{color:var(--bone)}
-.zones{display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
-.zrow{display:grid;grid-template-columns:148px 1fr;gap:22px;align-items:center}
-.zlabel{padding:11px 16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:1rem;color:#fff;text-align:center;letter-spacing:.01em}
-.zprice{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.2rem;color:#fff}
+.zones{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:12px 26px;margin-bottom:16px}
+.zrow{display:grid;grid-template-columns:128px 1fr;gap:18px;align-items:center;transition:transform .35s var(--ease)}
+.zlabel{padding:12px 16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:1rem;color:#fff;text-align:center;letter-spacing:.01em;transition:transform .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease)}
+.zprice{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.2rem;color:#fff;transition:color .3s var(--ease)}
 .zprice.muted{font-weight:600;font-size:1rem;color:var(--steel)}
-.zrow.corse .zlabel{background:transparent;border:1.5px solid var(--steel);color:#fff}
-@media(max-width:1080px){.livraison .liv-grid{grid-template-columns:1fr;gap:40px}}
-@media(max-width:760px){.zrow{grid-template-columns:120px 1fr;gap:14px}.zlabel{font-size:.88rem;padding:10px 10px}.zprice{font-size:1.05rem}}
+.zrow:hover{transform:translateX(6px)}
+.zrow:hover .zlabel{filter:brightness(1.12) saturate(1.05);box-shadow:0 10px 26px -10px rgba(0,0,0,.7);transform:scale(1.03)}
+.zrow:hover .zprice{color:var(--orange)}
+.zfoot{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:6px;padding:14px 18px;border:1.5px solid rgba(244,241,234,.22);transition:border-color .35s var(--ease),background .35s var(--ease)}
+.zfoot:hover{border-color:var(--orange);background:rgba(255,90,24,.06)}
+.zfoot .zfoot-l{font-family:'Bricolage Grotesque';font-weight:700;font-size:1rem;color:#fff}
+.zfoot .zfoot-r{font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);white-space:nowrap}
+.zfoot:hover .zfoot-r{color:var(--orange)}
+.livraison .btn{margin-top:28px}
+@media(max-width:1080px){.livraison .liv-grid{grid-template-columns:1fr;gap:40px}.liv-map{max-width:560px;margin:0 auto}}
+@media(max-width:760px){.zones{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row;gap:10px}.zrow{grid-template-columns:120px 1fr;gap:14px}.zlabel{font-size:.9rem;padding:10px 12px}.zprice{font-size:1.05rem}.zfoot{flex-direction:column;align-items:flex-start;gap:6px}}
