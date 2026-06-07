@@ -254,3 +254,23 @@
     };
   })();
 })();
+
+/* Lightbox : agrandissement des photos de cotes (page cantilever) */
+(function () {
+  var imgs = document.querySelectorAll(".cant-visuals .cv img, img.zoomable");
+  if (!imgs.length) return;
+  var lb = document.createElement("div");
+  lb.className = "lightbox";
+  lb.innerHTML = '<button class="lb-close" aria-label="Fermer">\u00D7</button><img alt=""><div class="lb-hint">Cliquez pour fermer</div>';
+  document.body.appendChild(lb);
+  var lbImg = lb.querySelector("img");
+  function openLB(src, alt) { lbImg.src = src; lbImg.alt = alt || ""; lb.classList.add("on"); document.body.style.overflow = "hidden"; }
+  function closeLB() { lb.classList.remove("on"); document.body.style.overflow = ""; }
+  Array.prototype.forEach.call(imgs, function (im) {
+    im.addEventListener("click", function () { openLB(im.currentSrc || im.src, im.alt); });
+  });
+  lb.addEventListener("click", function (e) {
+    if (e.target === lb || e.target === lbImg || e.target.classList.contains("lb-close")) closeLB();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLB(); });
+})();
