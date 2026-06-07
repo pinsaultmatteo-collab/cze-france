@@ -90,16 +90,50 @@
     });
   });
 
-  /* formulaire de contact -> mailto */
+  /* formulaire de contact -> Formspree (envoi direct, sans quitter la page) */
   (function () {
     var f = $("#contactForm"); if (!f) return;
+    var note = f.querySelector(".note");
+    var setNote = function (t, err) { if (note) { note.textContent = t; note.style.color = err ? "#c0392b" : ""; } };
+
+    // Pré-remplissage depuis le configurateur (?devis=...)
+    try {
+      var dv = new URLSearchParams(location.search).get("devis");
+      if (dv) {
+        var msg0 = f.querySelector('[name="message"]'); if (msg0) msg0.value = decodeURIComponent(dv) + "\n\n";
+        var sel0 = f.querySelector('[name="sujet"]'); if (sel0) sel0.value = "Demande de devis — Cantilever";
+        var em0 = f.querySelector('[name="email"]'); if (em0) em0.focus();
+      }
+    } catch (e) {}
+
     f.addEventListener("submit", function (e) {
       e.preventDefault();
-      var g = function (n) { var el = f.querySelector('[name="' + n + '"]'); return el ? encodeURIComponent(el.value) : ""; };
-      var subject = "Demande via le site — " + (f.querySelector('[name="sujet"]') ? f.querySelector('[name="sujet"]').value : "Contact");
-      var body = "Nom : " + g("nom") + "%0D%0AEntreprise : " + g("entreprise") + "%0D%0AEmail : " + g("email") +
-        "%0D%0ATéléphone : " + g("telephone") + "%0D%0A%0D%0AMessage :%0D%0A" + g("message");
-      window.location.href = "mailto:contact@cze-france.fr?subject=" + encodeURIComponent(subject) + "&body=" + body;
+      var action = f.getAttribute("action") || "";
+      var btn = f.querySelector('button[type="submit"]');
+      var span = btn ? btn.querySelector("span") : null;
+      if (!action || action.indexOf("VOTRE_ID") > -1) {
+        setNote("Formulaire non configuré : renseignez l'identifiant Formspree dans l'attribut action du formulaire.", true);
+        return;
+      }
+      var subj = f.querySelector('[name="_subject"]'), sel = f.querySelector('[name="sujet"]');
+      if (subj && sel) subj.value = "Site CZE France — " + sel.value;
+      if (btn) btn.disabled = true; if (span) span.textContent = "Envoi en cours…";
+      fetch(action, { method: "POST", body: new FormData(f), headers: { "Accept": "application/json" } })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok) {
+            f.innerHTML = '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Merci, votre demande est bien partie&nbsp;!</h3><p>Notre équipe vous répond généralement sous 24&nbsp;h ouvrées. Pour une urgence, appelez le <a href="tel:0531605161">05 31 60 51 61</a>.</p></div>';
+            try { f.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+          } else {
+            var m = (res.d && res.d.errors) ? res.d.errors.map(function (x) { return x.message; }).join(" · ") : "Une erreur est survenue. Réessayez ou écrivez à contact@cze-france.fr.";
+            if (btn) btn.disabled = false; if (span) span.textContent = "Envoyer ma demande";
+            setNote(m, true);
+          }
+        })
+        .catch(function () {
+          if (btn) btn.disabled = false; if (span) span.textContent = "Envoyer ma demande";
+          setNote("Connexion impossible. Réessayez ou écrivez à contact@cze-france.fr.", true);
+        });
     });
   })();
 
@@ -118,6 +152,40 @@
     var EUR = function (n) { return n.toLocaleString("fr-FR"); };
     var draft = { key: "simple", lvl: 3, qty: 1 };
     var items = [{ key: "simple", lvl: 3, qty: 1 }];
+    /* Livraison : tarifs par zone (cf. carte de la home) */
+    var ZONE_PRICE = { 1: 500, 2: 700, 3: 900, 4: 960, 5: 880, 6: 960 };
+    /* Département -> zone (approximatif, dérivé de la carte — ajustable librement) */
+    var DEPT_ZONE = { "01":5,"02":6,"03":5,"04":5,"05":5,"06":5,"07":5,"08":6,"09":1,"10":6,"11":1,"12":1,"13":5,"14":4,"15":5,"16":2,"17":2,"18":3,"19":2,"21":6,"22":4,"23":2,"24":2,"25":6,"26":5,"27":4,"28":3,"29":4,"30":5,"31":1,"32":1,"33":2,"34":1,"35":4,"36":3,"37":3,"38":5,"39":6,"40":2,"41":3,"42":5,"43":5,"44":4,"45":3,"46":1,"47":2,"48":1,"49":4,"50":4,"51":6,"52":6,"53":4,"54":6,"55":6,"56":4,"57":6,"58":6,"59":6,"60":6,"61":4,"62":6,"63":5,"64":2,"65":1,"66":1,"67":6,"68":6,"69":5,"70":6,"71":6,"72":4,"73":5,"74":5,"75":3,"76":4,"77":3,"78":3,"79":2,"80":6,"81":1,"82":1,"83":5,"84":5,"85":4,"86":2,"87":2,"88":6,"89":6,"90":6,"91":3,"92":3,"93":3,"94":3,"95":3 };
+    var delivery = null; // { city, zone, price } ou null
+
+    function deptFromInput(v) {
+      var s = String(v || ""), m = s.match(/(\d{5})/);
+      var cp = m ? m[1] : (s.match(/\b(\d{2})\b/) || [])[1];
+      if (!cp) return null;
+      var two = cp.substring(0, 2);
+      if (two === "20") return "CORSE";
+      if (two === "97" || two === "98") return "OM";
+      return two;
+    }
+    function computeDelivery() {
+      var input = $("#cityInput"), out = $("#zoneOut");
+      if (!input) { delivery = null; return; }
+      var raw = input.value.trim();
+      if (!raw) { delivery = null; if (out) { out.textContent = ""; out.className = "zoneout"; } render(); return; }
+      var dep = deptFromInput(raw);
+      if (dep === "CORSE" || dep === "OM") {
+        delivery = { city: raw, zone: null, price: 0 };
+        if (out) { out.innerHTML = "Corse / hors métropole — <b>nous consulter</b>"; out.className = "zoneout consult"; }
+      } else if (dep && DEPT_ZONE[dep]) {
+        var z = DEPT_ZONE[dep], p = ZONE_PRICE[z];
+        delivery = { city: raw, zone: z, price: p };
+        if (out) { out.innerHTML = "Zone " + z + " · <b>" + EUR(p) + " € HT</b>"; out.className = "zoneout ok"; }
+      } else {
+        delivery = { city: raw, zone: null, price: 0 };
+        if (out) { out.textContent = "Indiquez un code postal pour estimer la livraison."; out.className = "zoneout consult"; }
+      }
+      render();
+    }
     var unit = function (it) { return MODELS[it.key].base + (it.lvl - 3) * LEVEL_ADD; };
     var tierFor = function (p) { for (var i = 0; i < TIERS_DESC.length; i++) if (p >= TIERS_DESC[i].p) return TIERS_DESC[i].d; return 0; };
     var nextTier = function (p) { for (var i = 0; i < TIERS_ASC.length; i++) if (p < TIERS_ASC[i].p) return TIERS_ASC[i]; return null; };
@@ -137,9 +205,12 @@
           ' €</span><button class="qx" title="Retirer" data-i="' + i + '">✕</button></div></div>';
       });
       if (list) list.innerHTML = html;
-      var d = tierFor(pieces), total = Math.round(sub * (1 - d));
+      var d = tierFor(pieces), prod = Math.round(sub * (1 - d));
+      var dp = (delivery && delivery.price) ? delivery.price : 0;
+      var total = prod + dp;
       set("sPieces", pieces + (pieces > 1 ? " pièces" : " pièce"));
       set("sDisc", d ? ("− " + (d * 100) + " %") : "—");
+      set("sDeliv", delivery ? (delivery.price ? (EUR(delivery.price) + " € HT") : "Nous consulter") : "—");
       var nt = nextTier(pieces);
       var hint = $("#tierHint");
       if (hint) hint.textContent = nt ? ("Plus que " + (nt.p - pieces) + " pièce" + ((nt.p - pieces) > 1 ? "s" : "") + " pour −" + nt.d + "\u00A0% de remise") : "Remise maximale appliquée · −20\u00A0%";
@@ -163,12 +234,23 @@
     if (plus) plus.addEventListener("click", function () { draft.qty++; set("qtyVal", draft.qty); renderDraft(); });
     if (minus) minus.addEventListener("click", function () { if (draft.qty > 1) { draft.qty--; set("qtyVal", draft.qty); renderDraft(); } });
     if (addBtn) addBtn.addEventListener("click", function () { items.push({ key: draft.key, lvl: draft.lvl, qty: draft.qty }); render(); });
+    var cityEl = $("#cityInput"); if (cityEl) cityEl.addEventListener("input", computeDelivery);
     renderDraft(); render();
 
     window.sendQuote = function () {
-      var lines = items.map(function (it) { return "- " + MODELS[it.key].name + " · " + it.lvl + " niveaux · quantité " + it.qty; }).join("%0D%0A");
-      var body = "Bonjour,%0D%0A%0D%0AJe souhaite un devis pour la configuration suivante :%0D%0A" + (lines || "- (aucun cantilever ajouté)") + "%0D%0A%0D%0AMerci.";
-      window.location.href = "mailto:contact@cze-france.fr?subject=Demande de devis cantilever&body=" + body;
+      var pieces = items.reduce(function (a, it) { return a + it.qty; }, 0);
+      var sub = items.reduce(function (a, it) { return a + unit(it) * it.qty; }, 0);
+      var d = tierFor(pieces), prod = Math.round(sub * (1 - d));
+      var dp = (delivery && delivery.price) ? delivery.price : 0;
+      var grand = prod + dp;
+      var desc = items.length
+        ? items.map(function (it) { return it.qty + " cantilever " + (it.key === "double" ? "Double" : "Simple") + " (" + it.lvl + " niveaux)"; }).join(", ")
+        : "un cantilever";
+      var ville = (delivery && delivery.city) ? (", livré à " + delivery.city) : "";
+      var totTxt = EUR(grand) + " € HT" + (dp ? " (livraison Zone " + delivery.zone + " incluse)" : "");
+      var msg = "Bonjour,\n\nJ'ai réalisé un devis sur votre configurateur avec " + desc + ville +
+        ", pour un total estimé à " + totTxt + ".\n\nJ'aimerais être recontacté(e) au plus vite afin de finaliser ma commande.\n\nMerci d'avance.";
+      window.location.href = "contact.html?devis=" + encodeURIComponent(msg) + "#contactForm";
     };
   })();
 })();
