@@ -614,3 +614,31 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .livraison .btn{margin-top:28px}
 @media(max-width:1080px){.livraison .liv-grid{grid-template-columns:1fr;gap:40px}.liv-map{max-width:560px;margin:0 auto}}
 @media(max-width:760px){.zones{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row;gap:10px}.zrow{grid-template-columns:120px 1fr;gap:14px}.zlabel{font-size:.9rem;padding:10px 12px}.zprice{font-size:1.05rem}.zfoot{flex-direction:column;align-items:flex-start;gap:6px}}
+
+/* ---- Photos réelles dans les cartes (home + variantes) ---- */
+.card .imgwrap.photo{background:#0d0d10}
+.card .imgwrap.photo img{object-fit:cover;padding:0;mix-blend-mode:normal;width:100%;height:100%}
+.variant .vimg.photo{background:#0d0d10;padding:0}
+.variant .vimg.photo img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;mix-blend-mode:normal}
+
+/* ---- Tarif dégressif ---- */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+.tier{background:#fff;border:1px solid var(--line-d);padding:34px 28px;text-align:center;transition:.4s var(--ease)}
+.tier:hover{transform:translateY(-5px);box-shadow:0 26px 54px -30px rgba(11,11,13,.4)}
+.tier .tq{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-d);margin-bottom:14px}
+.tier .td{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(2.4rem,5vw,3.4rem);color:var(--ink);line-height:1;letter-spacing:-.02em}
+.tier.featured{background:var(--ink);border-color:var(--ink)}
+.tier.featured .tq{color:var(--orange)}
+.tier.featured .td{color:#fff}
+.tnotes{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px}
+.tnote{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line-d);padding:16px 22px;font-size:.95rem;color:var(--steel-d);flex:1;min-width:240px}
+.tnote b{color:var(--ink)}
+.tnote .tic{display:grid;place-items:center;width:30px;height:30px;flex-shrink:0;background:var(--orange);color:#fff;border-radius:50%;font-size:.85rem;font-weight:700}
+@media(max-width:760px){.tiers{grid-template-columns:1fr}}
+
+/* ---- Visuels agrandis (montage / cotes) ---- */
+.cant-visuals{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+.cant-visuals .cv{margin:0}
+.cant-visuals .cv img{display:block;width:100%;height:360px;object-fit:contain;background:#fff;border:1px solid var(--line-d);padding:20px}
+.cant-visuals .cv figcaption{font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-d);margin-top:12px;text-align:center}
+@media(max-width:760px){.cant-visuals{grid-template-columns:1fr}.cant-visuals .cv img{height:300px}}
