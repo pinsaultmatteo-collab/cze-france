@@ -132,7 +132,7 @@ nav a.lnk:hover{color:#fff}
 .hvis .frame{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,var(--ink-soft),#0d0d10);padding:14px;overflow:hidden}
 .hvis .frame::before{content:"";position:absolute;top:0;left:0;width:60px;height:60px;border-top:2px solid var(--orange);border-left:2px solid var(--orange);z-index:4}
 .hvis .frame::after{content:"";position:absolute;bottom:0;right:0;width:60px;height:60px;border-bottom:2px solid var(--orange);border-right:2px solid var(--orange);z-index:4}
-.hvis .ph{position:relative;height:520px;background:#0d0d10 url('https://cze-france.fr/wp-content/uploads/2023/01/CANTILEVER-4.jpg') center/cover;filter:grayscale(.15) contrast(1.05)}
+.hvis .ph{position:relative;height:520px;background:#0d0d10 url('../img/hero-cantilever.webp') center/cover;filter:grayscale(.05) contrast(1.03)}
 .hvis .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,13,.15),rgba(11,11,13,.6))}
 .hvis .tag{position:absolute;top:30px;left:30px;z-index:5;font-family:'JetBrains Mono';font-size:.6rem;letter-spacing:.2em;color:#fff;background:rgba(0,0,0,.5);border:1px solid var(--line);padding:8px 12px;backdrop-filter:blur(6px)}
 .spec-card{position:absolute;bottom:34px;right:34px;z-index:6;background:rgba(11,11,13,.78);backdrop-filter:blur(12px);border:1px solid var(--line);padding:22px 24px;width:230px}
@@ -582,10 +582,29 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .mapframe{width:100%;border:1px solid var(--line-d);filter:grayscale(.25);line-height:0}
 .mapframe iframe{display:block;width:100%}
 
-/* ---- Hero des pages internes (.phero) : contenu centré ---- */
+/* ---- Hero des pages internes (.phero) : contenu centré (la Home utilise .hero, non concernée) ---- */
 .phero .wrap{text-align:center}
 .phero .crumb{justify-content:center}
 .phero .pk{justify-content:center}
 .phero h1{margin-left:auto;margin-right:auto}
 .phero .sub{margin-left:auto;margin-right:auto}
 .phero .hero-cta{justify-content:center}
+
+/* ---- Bloc Livraison en France ---- */
+.livraison .liv-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center;margin-top:10px}
+.liv-map{position:relative;border:1px solid var(--line);background:#fff;padding:26px}
+.liv-map::before{content:"";position:absolute;top:0;left:0;width:48px;height:48px;border-top:2px solid var(--orange);border-left:2px solid var(--orange)}
+.liv-map::after{content:"";position:absolute;bottom:0;right:0;width:48px;height:48px;border-bottom:2px solid var(--orange);border-right:2px solid var(--orange)}
+.liv-map img{display:block;width:100%;height:auto}
+.liv-h2{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(1.9rem,3.4vw,2.9rem);letter-spacing:-.02em;line-height:1.05;color:#fff}
+.liv-h2 em{font-style:normal;color:var(--orange)}
+.liv-sub{font-size:1.05rem;line-height:1.65;margin:16px 0 28px;max-width:40em;color:var(--steel)}
+.liv-sub b{color:var(--bone)}
+.zones{display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
+.zrow{display:grid;grid-template-columns:148px 1fr;gap:22px;align-items:center}
+.zlabel{padding:11px 16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:1rem;color:#fff;text-align:center;letter-spacing:.01em}
+.zprice{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.2rem;color:#fff}
+.zprice.muted{font-weight:600;font-size:1rem;color:var(--steel)}
+.zrow.corse .zlabel{background:transparent;border:1.5px solid var(--steel);color:#fff}
+@media(max-width:1080px){.livraison .liv-grid{grid-template-columns:1fr;gap:40px}}
+@media(max-width:760px){.zrow{grid-template-columns:120px 1fr;gap:14px}.zlabel{font-size:.88rem;padding:10px 10px}.zprice{font-size:1.05rem}}
