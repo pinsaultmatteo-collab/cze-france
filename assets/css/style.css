@@ -751,3 +751,35 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   .fbar{flex-direction:column;text-align:center;gap:12px}
   .fbar .legal{justify-content:center;flex-wrap:wrap;gap:12px 20px}
 }
+
+/* Top bar : icône tél + sélecteur de langue (cachés en desktop) */
+.util .telico{display:none}
+.langsel{display:none}
+
+/* ===== Compléments responsive mobile (≤760px) ===== */
+@media(max-width:760px){
+  /* Top bar : tél en icône, langue en menu déroulant, statut sur une ligne */
+  .util .dot{display:none}
+  .util .telnum{display:none}
+  .util .telico{display:inline-flex;vertical-align:middle}
+  .util .tel{display:inline-flex;align-items:center}
+  .util .langs{display:none}
+  .langsel{display:inline-block;background:#0d0d10;color:var(--steel);border:1px solid var(--line);font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.06em;padding:4px 7px;border-radius:3px;cursor:pointer}
+  .util .r{gap:12px}
+  .util .wrap{height:38px;flex-wrap:nowrap}
+  .status #stxt{white-space:nowrap}
+
+  /* Hero : header → kicker = kicker → titre (~30px) */
+  .hero{padding-top:0}
+  .hero .wrap{padding-top:30px;padding-bottom:50px}
+
+  /* Bandeau défilant "cibles" : plus rapide (override garanti) */
+  .strip .marquee{animation:scrollx 15s linear infinite}
+
+  /* Espaces verticaux des blocs réduits (haut + bas) */
+  .about,.products,.config,.sectors,.engage,.group{padding:62px 0}
+  .cta{padding:64px 0}
+  .stats{padding:54px 0}
+  .clients{padding:54px 0}
+  .band{padding:60px 0}
+}
