@@ -151,7 +151,7 @@
     var TIERS_ASC = [{ p: 40, d: 10 }, { p: 80, d: 15 }, { p: 120, d: 20 }];
     var EUR = function (n) { return n.toLocaleString("fr-FR"); };
     var draft = { key: "simple", lvl: 3, qty: 1 };
-    var items = [{ key: "simple", lvl: 3, qty: 1 }];
+    var items = []; // devis vide au départ — se remplit via « Ajouter au devis »
     /* Livraison : tarifs par zone (cf. carte de la home) */
     var ZONE_PRICE = { 1: 500, 2: 700, 3: 900, 4: 960, 5: 880, 6: 960 };
     /* Département -> zone (approximatif, dérivé de la carte — ajustable librement) */
