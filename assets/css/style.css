@@ -792,8 +792,3 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   .util .tel .telico{display:inline-flex}
   .tellabel{display:inline;font-family:'JetBrains Mono';font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
 }
-
-/* Hero mobile : titre réduit pour que "votre rentabilité." tienne sur une ligne */
-@media(max-width:760px){
-  .hero h1{font-size:clamp(1.9rem,8vw,2.5rem)}
-}
