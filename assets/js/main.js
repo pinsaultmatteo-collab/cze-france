@@ -154,6 +154,17 @@
     };
     var FINISH = { thermo: EN ? "Powder-coated" : "Thermolaquée", galva: EN ? "Galvanized" : "Galvanisée" };
     var SURDEVIS = EN ? "On request" : "Sur devis";
+    /* Hauteur selon le nombre de niveaux (m). 3 niveaux = 4,50 m, 4 = 6,10 m (puis +1,60 m/niveau). */
+    var DEC = EN ? "." : ",";
+    var HEIGHT = { 3: "4" + DEC + "50", 4: "6" + DEC + "10", 5: "7" + DEC + "70", 6: "9" + DEC + "30" };
+    var DEPTH = { simple: "2" + DEC + "20", double: "3" + DEC + "90" };
+    var DLBL = EN ? "D" : "P";
+    function updateDims() {
+      $$("#modelOpts .opt").forEach(function (o) {
+        var d = o.querySelector(".dim");
+        if (d) d.textContent = "H " + HEIGHT[draft.lvl] + " m · " + DLBL + " " + DEPTH[o.dataset.key] + " m";
+      });
+    }
     var TIERS_DESC = [{ p: 120, d: .20 }, { p: 80, d: .15 }, { p: 40, d: .10 }];
     var TIERS_ASC = [{ p: 40, d: 10 }, { p: 80, d: 15 }, { p: 120, d: 20 }];
     var EUR = function (n) { return n.toLocaleString(EN ? "en-GB" : "fr-FR"); };
@@ -244,7 +255,7 @@
     $$("#levelSteps .step").forEach(function (s) {
       s.addEventListener("click", function () {
         $$("#levelSteps .step").forEach(function (x) { x.classList.remove("act"); });
-        s.classList.add("act"); draft.lvl = +s.dataset.lvl; renderDraft();
+        s.classList.add("act"); draft.lvl = +s.dataset.lvl; updateDims(); renderDraft();
       });
     });
     $$("#finishOpts .opt").forEach(function (o) {
@@ -258,7 +269,7 @@
     if (minus) minus.addEventListener("click", function () { if (draft.qty > 1) { draft.qty--; set("qtyVal", draft.qty); renderDraft(); } });
     if (addBtn) addBtn.addEventListener("click", function () { items.push({ key: draft.key, finish: draft.finish, lvl: draft.lvl, qty: draft.qty }); render(); });
     var cityEl = $("#cityInput"); if (cityEl) cityEl.addEventListener("input", computeDelivery);
-    renderDraft(); render();
+    renderDraft(); render(); updateDims();
 
     window.sendQuote = function () {
       var pieces = 0, sub = 0, hasQuote = false;
