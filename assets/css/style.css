@@ -801,10 +801,12 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   /* Bloc 1 (Le produit / Caractéristiques) : CTA centré */
   .pintro .btn{display:flex;width:fit-content;margin-left:auto;margin-right:auto}
 
-  /* Cartes variantes : image bien cadrée (cantilever bloc 2 + potence/cisaille) */
-  .variant .vimg{height:230px;overflow:hidden}
-  .variant .vimg.photo img{width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
-  .variant .vimg:not(.photo) img{width:auto;max-width:100%;height:100%;object-fit:contain}
+  /* Cartes variantes : cadrage fiable (photo en cover, rendu produit en contain) */
+  .variant .vimg{height:auto;overflow:hidden}
+  .variant .vimg.photo{display:block;aspect-ratio:4 / 3;padding:0;background:#0d0d10}
+  .variant .vimg.photo img{display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:center;mix-blend-mode:normal}
+  .variant .vimg:not(.photo){aspect-ratio:4 / 3;display:flex;align-items:center;justify-content:center;padding:18px}
+  .variant .vimg:not(.photo) img{width:auto;height:100%;max-width:100%;object-fit:contain;mix-blend-mode:multiply}
 
   /* En chiffres : 2 stats côte à côte, prix dessous, le tout centré */
   .specstrip{grid-template-columns:1fr 1fr}
