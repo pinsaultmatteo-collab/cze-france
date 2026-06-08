@@ -357,9 +357,9 @@ section{position:relative}
 .gvis .frame{position:relative;border:1px solid var(--line-d);background:#fff;padding:14px;overflow:hidden}
 .gvis .frame::before{content:"";position:absolute;top:0;left:0;width:54px;height:54px;border-top:2px solid var(--orange);border-left:2px solid var(--orange);z-index:4}
 .gvis .frame::after{content:"";position:absolute;bottom:0;right:0;width:54px;height:54px;border-bottom:2px solid var(--orange);border-right:2px solid var(--orange);z-index:4}
-.gvis .gimg{display:block;width:100%;height:440px;object-fit:cover;background:#f2efe8}
+.gvis .gimg{display:block;width:100%;height:auto;object-fit:contain;background:#f2efe8}
 .gvis .gtagimg{position:absolute;top:30px;left:30px;z-index:5;font-family:'JetBrains Mono';font-size:.58rem;letter-spacing:.18em;color:#fff;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);padding:8px 12px;backdrop-filter:blur(6px)}
-@media(max-width:1080px){.ggrid{grid-template-columns:1fr;gap:40px}.gvis .gimg{height:340px}}
+@media(max-width:1080px){.ggrid{grid-template-columns:1fr;gap:40px}.gvis .gimg{height:auto}}
 
 /* FOOTER */
 footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
@@ -737,7 +737,7 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   .ggrid .gdesc{order:5}
   .ggrid .gstats{order:6}
   .ggrid .btn{order:7}
-  .gvis .gimg{height:300px}
+  .gvis .gimg{height:auto}
 
   /* 8. CTA "Parlons de votre projet" : texte + bouton centrés */
   .cta .wrap{text-align:center}
@@ -814,3 +814,9 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   .specstrip .sp{text-align:center;padding:26px 14px}
   .specstrip .sp:last-child{grid-column:1 / -1}
 }
+
+/* Bloc groupe à-propos : texte à gauche, image carrée à droite */
+.gsplit{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.mediaframe.cover.sq{padding:0}
+.mediaframe.cover.sq .mi{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#0d0d10;mix-blend-mode:normal;padding:20px}
+@media(max-width:900px){.gsplit{grid-template-columns:1fr;gap:34px}}
