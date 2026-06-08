@@ -792,3 +792,22 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
   .util .tel .telico{display:inline-flex}
   .tellabel{display:inline;font-family:'JetBrains Mono';font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
 }
+
+/* ===== Corrections mobile complémentaires (≤760px) ===== */
+@media(max-width:760px){
+  /* Menu burger lisible après scroll : le header scrollé ne doit pas créer de bloc englobant (backdrop-filter) qui confine le menu fixed */
+  header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(11,11,13,.97)}
+
+  /* Bloc 1 (Le produit / Caractéristiques) : CTA centré */
+  .pintro .btn{display:flex;width:fit-content;margin-left:auto;margin-right:auto}
+
+  /* Cartes variantes : image bien cadrée (cantilever bloc 2 + potence/cisaille) */
+  .variant .vimg{height:230px;overflow:hidden}
+  .variant .vimg.photo img{width:100%;height:100%;object-fit:cover;mix-blend-mode:normal}
+  .variant .vimg:not(.photo) img{width:auto;max-width:100%;height:100%;object-fit:contain}
+
+  /* En chiffres : 2 stats côte à côte, prix dessous, le tout centré */
+  .specstrip{grid-template-columns:1fr 1fr}
+  .specstrip .sp{text-align:center;padding:26px 14px}
+  .specstrip .sp:last-child{grid-column:1 / -1}
+}
