@@ -1,0 +1,37 @@
+{
+  "redirects": [
+    { "source": "/cantilever-cze-france/", "destination": "/cantilever.html", "permanent": true },
+    { "source": "/cantilever-cze-france", "destination": "/cantilever.html", "permanent": true },
+
+    { "source": "/separateur-de-cuivre/", "destination": "/separateur-de-cuivre.html", "permanent": true },
+    { "source": "/separateur-de-cuivre", "destination": "/separateur-de-cuivre.html", "permanent": true },
+
+    { "source": "/cisailles-de-demantelement-hydrauliques/", "destination": "/cisailles-hydrauliques.html", "permanent": true },
+    { "source": "/cisailles-de-demantelement-hydrauliques", "destination": "/cisailles-hydrauliques.html", "permanent": true },
+
+    { "source": "/potence-avec-compensateur-de-poids-yydgg/", "destination": "/cisailles-hydrauliques.html", "permanent": true },
+    { "source": "/potence-avec-compensateur-de-poids-yydgg", "destination": "/cisailles-hydrauliques.html", "permanent": true },
+
+    { "source": "/contact/", "destination": "/contact.html", "permanent": true },
+    { "source": "/contact", "destination": "/contact.html", "permanent": true },
+
+    { "source": "/mentions-legales-et-politique-de-confidentialite/", "destination": "/mentions-legales.html", "permanent": true },
+    { "source": "/mentions-legales-et-politique-de-confidentialite", "destination": "/mentions-legales.html", "permanent": true },
+
+    { "source": "/conditions-generales-de-vente/", "destination": "/conditions-generales-de-vente.html", "permanent": true },
+    { "source": "/conditions-generales-de-vente", "destination": "/conditions-generales-de-vente.html", "permanent": true },
+
+    { "source": "/blog/", "destination": "/", "permanent": true },
+    { "source": "/blog", "destination": "/", "permanent": true },
+    { "source": "/category/blog/", "destination": "/", "permanent": true },
+    { "source": "/category/blog", "destination": "/", "permanent": true },
+
+    { "source": "/centres-vhu-des-cantilevers-pour-optimiser-le-stockage-des-vehicules/", "destination": "/cantilever.html", "permanent": true },
+    { "source": "/centres-vhu-des-cantilevers-pour-optimiser-le-stockage-des-vehicules", "destination": "/cantilever.html", "permanent": true },
+    { "source": "/cantilever-maximisez-lespace-de-stockage/", "destination": "/cantilever.html", "permanent": true },
+    { "source": "/cantilever-maximisez-lespace-de-stockage", "destination": "/cantilever.html", "permanent": true },
+
+    { "source": "/es", "destination": "/", "permanent": true },
+    { "source": "/es/:path*", "destination": "/", "permanent": true }
+  ]
+}
