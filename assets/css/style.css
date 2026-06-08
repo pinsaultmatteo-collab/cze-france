@@ -240,6 +240,7 @@ section{position:relative}
 .opt .name{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.05rem;color:#fff}
 .opt .dim{font-size:.74rem;color:var(--steel);margin-top:5px;font-family:'JetBrains Mono';letter-spacing:.04em}
 .opt .pr{font-family:'JetBrains Mono';font-size:.7rem;color:var(--orange);margin-top:10px}
+.opt .fdesc{font-size:.8rem;color:var(--steel);margin-top:7px;line-height:1.5;font-family:'Archivo'}
 .opt .check{position:absolute;top:14px;right:14px;width:16px;height:16px;border:1px solid var(--steel);border-radius:50%;transition:.3s}
 .opt.act .check{border-color:var(--orange);background:var(--orange);box-shadow:0 0 0 4px rgba(255,90,24,.18)}
 /* stepper */

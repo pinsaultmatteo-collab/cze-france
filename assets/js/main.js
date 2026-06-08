@@ -3,6 +3,7 @@
    ============================================================ */
 (function () {
   "use strict";
+  var EN = (document.documentElement.lang || "").slice(0, 2).toLowerCase() === "en";
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
@@ -16,7 +17,7 @@
       var n = new Date(), day = n.getDay(), h = n.getHours() + n.getMinutes() / 60;
       var open = (day >= 1 && day <= 5) && ((h >= 9 && h < 12) || (h >= 14 && h < 18));
       s.classList.toggle("open", open);
-      t.textContent = open ? "Actuellement ouvert" : "Actuellement fermé";
+      t.textContent = open ? (EN ? "Currently open" : "Actuellement ouvert") : (EN ? "Currently closed" : "Actuellement fermé");
     }
     up(); setInterval(up, 30000);
   })();
@@ -68,7 +69,7 @@
       var to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec || 0, 10), s = null, dur = 1600;
       function step(t) {
         if (!s) s = t; var p = Math.min((t - s) / dur, 1), e = 1 - Math.pow(1 - p, 3), v = to * e;
-        el.textContent = dec ? v.toFixed(dec).replace(".", ",") : Math.round(v);
+        el.textContent = dec ? (EN ? v.toFixed(dec) : v.toFixed(dec).replace(".", ",")) : Math.round(v);
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -101,7 +102,7 @@
       var dv = new URLSearchParams(location.search).get("devis");
       if (dv) {
         var msg0 = f.querySelector('[name="message"]'); if (msg0) msg0.value = decodeURIComponent(dv) + "\n\n";
-        var sel0 = f.querySelector('[name="sujet"]'); if (sel0) sel0.value = "Demande de devis — Cantilever";
+        var sel0 = f.querySelector('[name="sujet"]'); if (sel0) sel0.value = EN ? "Quote request — Cantilever" : "Demande de devis — Cantilever";
         var em0 = f.querySelector('[name="email"]'); if (em0) em0.focus();
       }
     } catch (e) {}
@@ -112,27 +113,27 @@
       var btn = f.querySelector('button[type="submit"]');
       var span = btn ? btn.querySelector("span") : null;
       if (!action || action.indexOf("VOTRE_ID") > -1) {
-        setNote("Formulaire non configuré : renseignez l'identifiant Formspree dans l'attribut action du formulaire.", true);
+        setNote(EN ? "Form not configured: set your Formspree ID in the form action attribute." : "Formulaire non configuré : renseignez l'identifiant Formspree dans l'attribut action du formulaire.", true);
         return;
       }
       var subj = f.querySelector('[name="_subject"]'), sel = f.querySelector('[name="sujet"]');
       if (subj && sel) subj.value = "Site CZE France — " + sel.value;
-      if (btn) btn.disabled = true; if (span) span.textContent = "Envoi en cours…";
+      if (btn) btn.disabled = true; if (span) span.textContent = EN ? "Sending…" : "Envoi en cours…";
       fetch(action, { method: "POST", body: new FormData(f), headers: { "Accept": "application/json" } })
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
           if (res.ok) {
-            f.innerHTML = '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Merci, votre demande est bien partie&nbsp;!</h3><p>Notre équipe vous répond généralement sous 24&nbsp;h ouvrées. Pour une urgence, appelez le <a href="tel:0531605161">05 31 60 51 61</a>.</p></div>';
+            f.innerHTML = (EN ? '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Thank you — your request has been sent!</h3><p>Our team usually replies within 24 business hours. For anything urgent, call <a href="tel:0531605161">+33 5 31 60 51 61</a>.</p></div>' : '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Merci, votre demande est bien partie&nbsp;!</h3><p>Notre équipe vous répond généralement sous 24&nbsp;h ouvrées. Pour une urgence, appelez le <a href="tel:0531605161">05 31 60 51 61</a>.</p></div>');
             try { f.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
           } else {
-            var m = (res.d && res.d.errors) ? res.d.errors.map(function (x) { return x.message; }).join(" · ") : "Une erreur est survenue. Réessayez ou écrivez à contact@cze-france.fr.";
-            if (btn) btn.disabled = false; if (span) span.textContent = "Envoyer ma demande";
+            var m = (res.d && res.d.errors) ? res.d.errors.map(function (x) { return x.message; }).join(" · ") : (EN ? "An error occurred. Please try again or email contact@cze-france.fr." : "Une erreur est survenue. Réessayez ou écrivez à contact@cze-france.fr.");
+            if (btn) btn.disabled = false; if (span) span.textContent = EN ? "Send my request" : "Envoyer ma demande";
             setNote(m, true);
           }
         })
         .catch(function () {
-          if (btn) btn.disabled = false; if (span) span.textContent = "Envoyer ma demande";
-          setNote("Connexion impossible. Réessayez ou écrivez à contact@cze-france.fr.", true);
+          if (btn) btn.disabled = false; if (span) span.textContent = EN ? "Send my request" : "Envoyer ma demande";
+          setNote(EN ? "Connection failed. Please try again or email contact@cze-france.fr." : "Connexion impossible. Réessayez ou écrivez à contact@cze-france.fr.", true);
         });
     });
   })();
@@ -142,15 +143,22 @@
      ============================================================ */
   (function () {
     if (!$("#modelOpts")) return;
-    var LEVEL_ADD = 180; // estimation par niveau additionnel (placeholder à câbler sur tarif réel)
-    var MODELS = {
-      simple: { name: "Cantilever Simple", base: 1095, prof: "2,20 m" },
-      double: { name: "Cantilever Double", base: 1395, prof: "3,90 m" }
+    /* Tarifs HT par modèle × finition × niveau. 5 et 6 niveaux = sur devis (pas de prix affiché). */
+    var PRICE = {
+      simple: { thermo: { 3: 1095, 4: 1275 }, galva: { 3: 1535, 4: 1725 } },
+      double: { thermo: { 3: 1395, 4: 1575 }, galva: { 3: 1865, 4: 1925 } }
     };
+    var MODELS = {
+      simple: { name: EN ? "Single Cantilever" : "Cantilever Simple", prof: "2,20 m" },
+      double: { name: EN ? "Double Cantilever" : "Cantilever Double", prof: "3,90 m" }
+    };
+    var FINISH = { thermo: EN ? "Powder-coated" : "Thermolaquée", galva: EN ? "Galvanized" : "Galvanisée" };
+    var SURDEVIS = EN ? "On request" : "Sur devis";
     var TIERS_DESC = [{ p: 120, d: .20 }, { p: 80, d: .15 }, { p: 40, d: .10 }];
     var TIERS_ASC = [{ p: 40, d: 10 }, { p: 80, d: 15 }, { p: 120, d: 20 }];
-    var EUR = function (n) { return n.toLocaleString("fr-FR"); };
-    var draft = { key: "simple", lvl: 3, qty: 1 };
+    var EUR = function (n) { return n.toLocaleString(EN ? "en-GB" : "fr-FR"); };
+    var HT = EN ? " € excl. VAT" : " € HT";
+    var draft = { key: "simple", finish: "thermo", lvl: 3, qty: 1 };
     var items = []; // devis vide au départ — se remplit via « Ajouter au devis »
     /* Livraison : tarifs par zone (cf. carte de la home) */
     var ZONE_PRICE = { 1: 500, 2: 700, 3: 900, 4: 960, 5: 880, 6: 960 };
@@ -175,47 +183,56 @@
       var dep = deptFromInput(raw);
       if (dep === "CORSE" || dep === "OM") {
         delivery = { city: raw, zone: null, price: 0 };
-        if (out) { out.innerHTML = "Corse / hors métropole — <b>nous consulter</b>"; out.className = "zoneout consult"; }
+        if (out) { out.innerHTML = EN ? "Corsica / overseas — <b>please contact us</b>" : "Corse / hors métropole — <b>nous consulter</b>"; out.className = "zoneout consult"; }
       } else if (dep && DEPT_ZONE[dep]) {
         var z = DEPT_ZONE[dep], p = ZONE_PRICE[z];
         delivery = { city: raw, zone: z, price: p };
-        if (out) { out.innerHTML = "Zone " + z + " · <b>" + EUR(p) + " € HT</b>"; out.className = "zoneout ok"; }
+        if (out) { out.innerHTML = "Zone " + z + " · <b>" + EUR(p) + HT + "</b>"; out.className = "zoneout ok"; }
       } else {
         delivery = { city: raw, zone: null, price: 0 };
-        if (out) { out.textContent = "Indiquez un code postal pour estimer la livraison."; out.className = "zoneout consult"; }
+        if (out) { out.textContent = EN ? "Enter a postal code to estimate delivery." : "Indiquez un code postal pour estimer la livraison."; out.className = "zoneout consult"; }
       }
       render();
     }
-    var unit = function (it) { return MODELS[it.key].base + (it.lvl - 3) * LEVEL_ADD; };
+    var unit = function (it) { var t = PRICE[it.key][it.finish]; return t ? t[it.lvl] : undefined; }; // undefined => sur devis
     var tierFor = function (p) { for (var i = 0; i < TIERS_DESC.length; i++) if (p >= TIERS_DESC[i].p) return TIERS_DESC[i].d; return 0; };
     var nextTier = function (p) { for (var i = 0; i < TIERS_ASC.length; i++) if (p < TIERS_ASC[i].p) return TIERS_ASC[i]; return null; };
     var set = function (id, v) { var e = $("#" + id); if (e) e.textContent = v; };
 
     function renderDraft() {
-      set("draftPrice", EUR(unit(draft) * draft.qty) + " € HT" + (draft.qty > 1 ? " · " + draft.qty + "×" : ""));
+      var u = unit(draft), q = draft.qty > 1 ? " · " + draft.qty + "×" : "";
+      set("draftPrice", (typeof u === "number" ? (EUR(u * draft.qty) + HT) : SURDEVIS) + q);
     }
     function render() {
-      var list = $("#qitems"), html = "", sub = 0, pieces = 0;
-      if (!items.length) html = '<div class="qempty">Configurez un cantilever puis ajoutez-le à votre devis.</div>';
+      var list = $("#qitems"), html = "", sub = 0, pieces = 0, hasQuote = false;
+      if (!items.length) html = '<div class="qempty">' + (EN ? "Configure a cantilever, then add it to your quote." : "Configurez un cantilever puis ajoutez-le à votre devis.") + '</div>';
       items.forEach(function (it, i) {
-        var lp = unit(it) * it.qty; sub += lp; pieces += it.qty;
-        html += '<div class="qline"><div class="qinfo"><div class="qn">' + MODELS[it.key].name +
-          '</div><div class="qm">' + it.lvl + " niveaux · ×" + it.qty + " · " + EUR(unit(it)) +
-          ' €/u</div></div><div class="qside"><span class="qp">' + EUR(lp) +
-          ' €</span><button class="qx" title="Retirer" data-i="' + i + '">✕</button></div></div>';
+        var u = unit(it), priceTxt, perU; pieces += it.qty;
+        if (typeof u === "number") { var lp = u * it.qty; sub += lp; priceTxt = EUR(lp) + " €"; perU = " · " + EUR(u) + " €/u"; }
+        else { hasQuote = true; priceTxt = SURDEVIS; perU = ""; }
+        html += '<div class="qline"><div class="qinfo"><div class="qn">' + MODELS[it.key].name + " · " + FINISH[it.finish] +
+          '</div><div class="qm">' + it.lvl + (EN ? " levels · ×" : " niveaux · ×") + it.qty + perU +
+          '</div></div><div class="qside"><span class="qp">' + priceTxt +
+          '</span><button class="qx" title="' + (EN ? "Remove" : "Retirer") + '" data-i="' + i + '">✕</button></div></div>';
       });
       if (list) list.innerHTML = html;
       var d = tierFor(pieces), prod = Math.round(sub * (1 - d));
       var dp = (delivery && delivery.price) ? delivery.price : 0;
       var total = prod + dp;
-      set("sPieces", pieces + (pieces > 1 ? " pièces" : " pièce"));
+      set("sPieces", pieces + (EN ? (pieces > 1 ? " units" : " unit") : (pieces > 1 ? " pièces" : " pièce")));
       set("sDisc", d ? ("− " + (d * 100) + " %") : "—");
-      set("sDeliv", delivery ? (delivery.price ? (EUR(delivery.price) + " € HT") : "Nous consulter") : "—");
+      set("sDeliv", delivery ? (delivery.price ? (EUR(delivery.price) + HT) : (EN ? "Contact us" : "Nous consulter")) : "—");
       var nt = nextTier(pieces);
       var hint = $("#tierHint");
-      if (hint) hint.textContent = nt ? ("Plus que " + (nt.p - pieces) + " pièce" + ((nt.p - pieces) > 1 ? "s" : "") + " pour −" + nt.d + "\u00A0% de remise") : "Remise maximale appliquée · −20\u00A0%";
-      set("sTotal", EUR(total));
-      set("sTtc", EUR(Math.round(total * 1.2)));
+      if (hint) hint.textContent = nt ? (EN ? ((nt.p - pieces) + " more unit" + ((nt.p - pieces) > 1 ? "s" : "") + " for −" + nt.d + "\u00A0% off") : ("Plus que " + (nt.p - pieces) + " pièce" + ((nt.p - pieces) > 1 ? "s" : "") + " pour −" + nt.d + "\u00A0% de remise")) : (EN ? "Maximum discount applied · −20\u00A0%" : "Remise maximale appliquée · −20\u00A0%");
+      var amt = $(".summary .amt"), htline = $(".summary .ht");
+      if (hasQuote) {
+        if (amt) amt.innerHTML = '<b id="sTotal">' + SURDEVIS + '</b>';
+        if (htline) htline.style.display = "none";
+      } else {
+        if (amt) amt.innerHTML = '<b id="sTotal">' + EUR(total) + '</b> €';
+        if (htline) { htline.style.display = ""; htline.innerHTML = (EN ? "excl. VAT · i.e. " : "HT · soit ") + '<span id="sTtc">' + EUR(Math.round(total * 1.2)) + '</span>' + (EN ? " € incl. VAT" : " € TTC"); }
+      }
       if (list) $$(".qx", list).forEach(function (b) { b.addEventListener("click", function () { items.splice(+b.dataset.i, 1); render(); }); });
     }
     $$("#modelOpts .opt").forEach(function (o) {
@@ -230,26 +247,44 @@
         s.classList.add("act"); draft.lvl = +s.dataset.lvl; renderDraft();
       });
     });
+    $$("#finishOpts .opt").forEach(function (o) {
+      o.addEventListener("click", function () {
+        $$("#finishOpts .opt").forEach(function (x) { x.classList.remove("act"); });
+        o.classList.add("act"); draft.finish = o.dataset.finish; renderDraft();
+      });
+    });
     var plus = $("#plus"), minus = $("#minus"), addBtn = $("#addBtn");
     if (plus) plus.addEventListener("click", function () { draft.qty++; set("qtyVal", draft.qty); renderDraft(); });
     if (minus) minus.addEventListener("click", function () { if (draft.qty > 1) { draft.qty--; set("qtyVal", draft.qty); renderDraft(); } });
-    if (addBtn) addBtn.addEventListener("click", function () { items.push({ key: draft.key, lvl: draft.lvl, qty: draft.qty }); render(); });
+    if (addBtn) addBtn.addEventListener("click", function () { items.push({ key: draft.key, finish: draft.finish, lvl: draft.lvl, qty: draft.qty }); render(); });
     var cityEl = $("#cityInput"); if (cityEl) cityEl.addEventListener("input", computeDelivery);
     renderDraft(); render();
 
     window.sendQuote = function () {
-      var pieces = items.reduce(function (a, it) { return a + it.qty; }, 0);
-      var sub = items.reduce(function (a, it) { return a + unit(it) * it.qty; }, 0);
+      var pieces = 0, sub = 0, hasQuote = false;
+      items.forEach(function (it) { pieces += it.qty; var u = unit(it); if (typeof u === "number") sub += u * it.qty; else hasQuote = true; });
       var d = tierFor(pieces), prod = Math.round(sub * (1 - d));
       var dp = (delivery && delivery.price) ? delivery.price : 0;
       var grand = prod + dp;
       var desc = items.length
-        ? items.map(function (it) { return it.qty + " cantilever " + (it.key === "double" ? "Double" : "Simple") + " (" + it.lvl + " niveaux)"; }).join(", ")
-        : "un cantilever";
-      var ville = (delivery && delivery.city) ? (", livré à " + delivery.city) : "";
-      var totTxt = EUR(grand) + " € HT" + (dp ? " (livraison Zone " + delivery.zone + " incluse)" : "");
-      var msg = "Bonjour,\n\nJ'ai réalisé un devis sur votre configurateur avec " + desc + ville +
-        ", pour un total estimé à " + totTxt + ".\n\nJ'aimerais être recontacté(e) au plus vite afin de finaliser ma commande.\n\nMerci d'avance.";
+        ? items.map(function (it) {
+            var mdl = (it.key === "double" ? "Double" : (EN ? "Single" : "Simple")), fin = FINISH[it.finish], sd = (typeof unit(it) !== "number");
+            return EN
+              ? (it.qty + " " + mdl + " cantilever, " + fin + " (" + it.lvl + " levels)" + (sd ? " [price on request]" : ""))
+              : (it.qty + " cantilever " + mdl + ", " + fin + " (" + it.lvl + " niveaux)" + (sd ? " [prix sur devis]" : ""));
+          }).join(", ")
+        : (EN ? "a cantilever" : "un cantilever");
+      var ville = (delivery && delivery.city) ? ((EN ? ", delivered to " : ", livré à ") + delivery.city) : "";
+      var totLine;
+      if (hasQuote) {
+        totLine = EN ? "Estimated total: on request (some items are quoted on request)." : "Total estimé : sur devis (certains éléments sont chiffrés sur demande).";
+      } else {
+        var totTxt = EUR(grand) + HT + (dp ? (EN ? (" (Zone " + delivery.zone + " delivery included)") : (" (livraison Zone " + delivery.zone + " incluse)")) : "");
+        totLine = (EN ? "Estimated total: " : "Total estimé : ") + totTxt + ".";
+      }
+      var msg = EN
+        ? ("Hello,\n\nI built a quote on your configurator with " + desc + ville + ".\n" + totLine + "\n\nI would like to be contacted as soon as possible to finalise my order.\n\nThank you in advance.")
+        : ("Bonjour,\n\nJ'ai réalisé un devis sur votre configurateur avec " + desc + ville + ".\n" + totLine + "\n\nJ'aimerais être recontacté(e) au plus vite afin de finaliser ma commande.\n\nMerci d'avance.");
       window.location.href = "contact.html?devis=" + encodeURIComponent(msg) + "#contactForm";
     };
   })();
@@ -259,9 +294,10 @@
 (function () {
   var imgs = document.querySelectorAll(".cant-visuals .cv img, img.zoomable");
   if (!imgs.length) return;
+  var EN = (document.documentElement.lang || "").slice(0, 2).toLowerCase() === "en";
   var lb = document.createElement("div");
   lb.className = "lightbox";
-  lb.innerHTML = '<button class="lb-close" aria-label="Fermer">\u00D7</button><img alt=""><div class="lb-hint">Cliquez pour fermer</div>';
+  lb.innerHTML = '<button class="lb-close" aria-label="' + (EN ? "Close" : "Fermer") + '">\u00D7</button><img alt=""><div class="lb-hint">' + (EN ? "Click to close" : "Cliquez pour fermer") + '</div>';
   document.body.appendChild(lb);
   var lbImg = lb.querySelector("img");
   function openLB(src, alt) { lbImg.src = src; lbImg.alt = alt || ""; lb.classList.add("on"); document.body.style.overflow = "hidden"; }
