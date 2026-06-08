@@ -1,0 +1,32 @@
+# CZE France
+
+> CZE France conçoit et fournit des équipements industriels pour le secteur automobile : racks cantilever de stockage, séparateurs de cuivre et cisailles hydrauliques de démantèlement. Société basée à Toulouse (11 impasse Pierre Camo, 31200), livraison partout en France. Spécialiste des centres VHU, casses auto, dépanneurs, concessions, fourrières et centres de secours.
+
+CZE France est une société du groupe CZE France, aux côtés de CZN Machinery (importateur de mini-pelles et mini-engins de chantier neufs). Contact : 05 31 60 51 61 — contact@cze-france.fr. Horaires : lundi au vendredi, 9h–12h / 14h–18h.
+
+## Produits
+
+- [Cantilever](https://cze-france.fr/cantilever.html): racks de stockage cantilever simple (dès 1 095 € HT) ou double (dès 1 395 € HT), 4 étages et plus, fabrication standard ou sur-mesure. Tarif dégressif : −10 % dès 40 pièces, −15 % dès 80, −20 % dès 120.
+- [Séparateur de cuivre](https://cze-france.fr/separateur-de-cuivre.html): séparateur V-C02 transformant les câbles en granulés de cuivre pur à 99,99 %, dès 7 920 € HT.
+- [Cisailles hydrauliques](https://cze-france.fr/cisailles-hydrauliques.html): cisaille de démantèlement S211 (630 bars, force 293 kN, ouverture 128 mm, 14 kg) dès 1 750 € HT, et potence avec compensateur de poids YYDGG à 1 675 € HT.
+- [Configurateur de cantilever](https://cze-france.fr/configurateur.html): outil en ligne pour composer son cantilever et obtenir une estimation tarifaire immédiate.
+
+## Ressources
+
+- [Blog](https://cze-france.fr/blog.html): conseils sur le stockage cantilever, l'optimisation de l'espace et l'équipement des centres VHU.
+- [Cantilevers : une solution flexible et robuste pour les centres VHU](https://cze-france.fr/cantilever-solution-flexible-robuste-vhu.html)
+- [Maximiser l'espace de stockage avec les systèmes de cantilever](https://cze-france.fr/cantilever-maximiser-espace-stockage.html)
+- [Centres VHU : les cantilevers optimisent le stockage des véhicules](https://cze-france.fr/centres-vhu-cantilevers-stockage-vehicules.html)
+
+## Société
+
+- [Accueil](https://cze-france.fr/): présentation des solutions CZE France pour l'automobile.
+- [À propos](https://cze-france.fr/a-propos.html): le partenaire industriel du secteur automobile.
+- [Contact](https://cze-france.fr/contact.html): coordonnées, formulaire de devis, atelier à Toulouse.
+- [Contenu complet (llms-full.md)](https://cze-france.fr/llms-full.md): l'intégralité du contenu du site en un seul fichier markdown.
+
+## Optional
+
+- [Mentions légales](https://cze-france.fr/mentions-legales.html)
+- [Politique de confidentialité](https://cze-france.fr/politique-de-confidentialite.html)
+- [Conditions générales de vente](https://cze-france.fr/conditions-generales-de-vente.html)
