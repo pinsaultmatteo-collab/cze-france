@@ -173,18 +173,18 @@
               <div class="check"></div>
               <div class="name">Cantilever Simple</div>
               <div class="dim">H 4,50 m · P 2,20 m</div>
-              <div class="pr">1 095 € HT</div>
+              <div class="pr">À partir de 1 095 € HT</div>
             </div>
             <div class="opt" data-key="double">
               <div class="check"></div>
               <div class="name">Cantilever Double</div>
               <div class="dim">H 4,50 m · P 3,90 m</div>
-              <div class="pr">1 395 € HT</div>
+              <div class="pr">À partir de 1 395 € HT</div>
             </div>
           </div>
         </div>
         <div class="field">
-          <div class="flabel"><span class="mono">02 · Niveaux de stockage</span><span class="hint">3 inclus · jusqu'à 6</span></div>
+          <div class="flabel"><span class="mono">02 · Niveaux de stockage</span><span class="hint">3 inclus · 5–6 sur devis</span></div>
           <div class="steps" id="levelSteps">
             <div class="step act" data-lvl="3">3</div>
             <div class="step" data-lvl="4">4</div>
@@ -193,14 +193,29 @@
           </div>
         </div>
         <div class="field">
-          <div class="flabel"><span class="mono">03 · Quantité</span><span class="hint">De ce modèle</span></div>
+          <div class="flabel"><span class="mono">03 · Finition</span><span class="hint">Thermolaquée ou galvanisée</span></div>
+          <div class="opts" id="finishOpts">
+            <div class="opt act" data-finish="thermo">
+              <div class="check"></div>
+              <div class="name">Thermolaquée</div>
+              <div class="fdesc">Peinture poudre cuite au four : finition soignée et bonne tenue anticorrosion, idéale en intérieur ou sous abri.</div>
+            </div>
+            <div class="opt" data-finish="galva">
+              <div class="check"></div>
+              <div class="name">Galvanisée</div>
+              <div class="fdesc">Acier galvanisé à chaud : protection maximale contre la rouille, idéale pour une exposition extérieure.</div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="flabel"><span class="mono">04 · Quantité</span><span class="hint">De ce modèle</span></div>
           <div class="qty">
             <button id="minus">–</button>
             <div class="val" id="qtyVal">1</div>
             <button id="plus">+</button>
           </div>
         </div>
-        <div class="field"><div class="flabel"><span class="mono">04 · Livraison</span><span class="hint">Ville ou code postal</span></div><input type="text" id="cityInput" class="cityfield" placeholder="Ex. 31000 Toulouse" autocomplete="postal-code"><div class="zoneout" id="zoneOut"></div></div><div class="addrow">
+        <div class="field"><div class="flabel"><span class="mono">05 · Livraison</span><span class="hint">Ville ou code postal</span></div><input type="text" id="cityInput" class="cityfield" placeholder="Ex. 31000 Toulouse" autocomplete="postal-code"><div class="zoneout" id="zoneOut"></div></div><div class="addrow">
           <div class="draftprice"><span class="mono">Ce cantilever</span><b id="draftPrice">1 095 € HT</b></div>
           <button class="btn addbtn" id="addBtn"><span>+ Ajouter au devis</span></button>
         </div>
@@ -216,7 +231,7 @@
           <div class="amt"><b id="sTotal">1 095</b> €</div>
           <div class="ht">HT · soit <span id="sTtc">1 314</span> € TTC</div>
         </div>
-        <p class="note">Remises automatiques : −10 % dès 40 pièces, −15 % dès 80, −20 % au-delà de 120. Estimation indicative — le devis définitif (niveaux additionnels, livraison) est confirmé par notre équipe.</p>
+        <p class="note">Remises automatiques : −10 % dès 40 pièces, −15 % dès 80, −20 % au-delà de 120. Les configurations 5 et 6 niveaux sont établies sur devis. Estimation indicative — le devis définitif (niveaux additionnels, finition, livraison) est confirmé par notre équipe.</p>
         <button class="btn" onclick="sendQuote()"><span>Demander ce devis</span>
           <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
