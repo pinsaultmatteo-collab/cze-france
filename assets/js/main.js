@@ -145,8 +145,8 @@
     if (!$("#modelOpts")) return;
     /* Tarifs HT par modèle × finition × niveau. 5 et 6 niveaux = sur devis (pas de prix affiché). */
     var PRICE = {
-      simple: { thermo: { 3: 1095, 4: 1275 }, galva: { 3: 1535, 4: 1725 } },
-      double: { thermo: { 3: 1395, 4: 1575 }, galva: { 3: 1865, 4: 1925 } }
+      simple: { thermo: { 3: 1095, 4: 1275, 5: 2055 }, galva: { 3: 1535, 4: 1725, 5: 2597 } },
+      double: { thermo: { 3: 1395, 4: 1575, 5: 2588 }, galva: { 3: 1865, 4: 1925, 5: 3248 } }
     };
     var MODELS = {
       simple: { name: EN ? "Single Cantilever" : "Cantilever Simple", prof: "2,20 m" },
