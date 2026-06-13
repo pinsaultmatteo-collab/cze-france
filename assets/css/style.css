@@ -821,3 +821,5 @@ footer{background:#060607;padding:90px 0 0;border-top:1px solid var(--line)}
 .mediaframe.cover.sq{padding:0;max-width:440px;margin:0 auto}
 .mediaframe.cover.sq .mi{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center;background:#0d0d10;mix-blend-mode:normal;padding:0}
 @media(max-width:900px){.gsplit{grid-template-columns:1fr;gap:34px}}
+
+.variants.tri{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
