@@ -140,6 +140,20 @@
     });
   })();
 
+  /* GA4 : tracking des clics sur le numéro de téléphone (tel:) — couvre top bar, footer, blocs CTA, partout */
+  (function () {
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+      if (!a || typeof gtag !== "function") return;
+      var loc = a.closest(".util") ? "topbar" : a.closest("footer") ? "footer" : a.closest(".cta") ? "cta" : "page";
+      gtag("event", "click_to_call", {
+        phone_number: (a.getAttribute("href") || "").replace("tel:", ""),
+        link_location: loc,
+        language: EN ? "en" : "fr"
+      });
+    }, true);
+  })();
+
   /* ============================================================
      CONFIGURATEUR CANTILEVER (home teaser + page dédiée)
      ============================================================ */
