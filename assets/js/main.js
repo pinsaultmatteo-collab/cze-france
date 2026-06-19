@@ -7,6 +7,27 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
+  /* ----- Capture identifiant de clic Google Ads (gclid/gbraid/wbraid) -----
+     Stocké à l'arrivée et conservé 90 j : persiste de page en page (site statique)
+     pour être joint au lead lors de l'envoi du formulaire de contact. */
+  var ADS_KEY = "cze_ads_click";
+  (function () {
+    try {
+      var p = new URLSearchParams(location.search), keys = ["gclid", "gbraid", "wbraid"];
+      for (var i = 0; i < keys.length; i++) {
+        var v = p.get(keys[i]);
+        if (v) { localStorage.setItem(ADS_KEY, JSON.stringify({ k: keys[i], v: v, t: Date.now(), page: location.pathname })); break; }
+      }
+    } catch (e) {}
+  })();
+  function getAdsClick() {
+    try {
+      var o = JSON.parse(localStorage.getItem(ADS_KEY) || "null");
+      if (!o || !o.v || Date.now() - (o.t || 0) > 90 * 864e5) return null; // expiré après 90 jours
+      return o;
+    } catch (e) { return null; }
+  }
+
   /* année */
   var yr = $("#yr"); if (yr) yr.textContent = new Date().getFullYear();
 
@@ -95,6 +116,15 @@
   (function () {
     var f = $("#contactForm"); if (!f) return;
     if (typeof gtag === "function") gtag('event', 'view_contact_page', { language: EN ? 'en' : 'fr' });
+    /* champ caché : identifiant de clic Google Ads (pour repérer les leads issus des pubs) */
+    (function () {
+      var g = getAdsClick();
+      if (g && !f.querySelector('[name="' + g.k + '"]')) {
+        var inp = document.createElement("input");
+        inp.type = "hidden"; inp.name = g.k; inp.value = g.v;
+        f.appendChild(inp);
+      }
+    })();
     var note = f.querySelector(".note");
     var setNote = function (t, err) { if (note) { note.textContent = t; note.style.color = err ? "#c0392b" : ""; } };
 
