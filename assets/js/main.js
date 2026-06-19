@@ -154,7 +154,7 @@
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
           if (res.ok) {
-            if (typeof gtag === "function") gtag('event', 'generate_lead', { form_id: 'contactForm', language: EN ? 'en' : 'fr' });
+            if (typeof gtag === "function") gtag('event', 'generate_lead', { form_id: 'contactForm', language: EN ? 'en' : 'fr', value: 1, currency: 'EUR' });
             f.innerHTML = (EN ? '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Thank you — your request has been sent!</h3><p>Our team usually replies within 24 business hours. For anything urgent, call <a href="tel:0531605161">+33 5 31 60 51 61</a>.</p></div>' : '<div class="form-success"><div class="fs-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Merci, votre demande est bien partie&nbsp;!</h3><p>Notre équipe vous répond généralement sous 24&nbsp;h ouvrées. Pour une urgence, appelez le <a href="tel:0531605161">05 31 60 51 61</a>.</p></div>');
             try { f.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
           } else {
