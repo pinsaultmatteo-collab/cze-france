@@ -209,6 +209,14 @@
       $$("#modelOpts .opt").forEach(function (o) {
         var d = o.querySelector(".dim");
         if (d) d.textContent = "H " + HEIGHT[draft.lvl] + " m · " + DLBL + " " + DEPTH[o.dataset.key] + " m";
+        /* « À partir de » = finition la moins chère (thermolaquée) pour le niveau sélectionné */
+        var pr = o.querySelector(".pr");
+        if (pr) {
+          var t = PRICE[o.dataset.key].thermo[draft.lvl];
+          pr.textContent = (typeof t === "number")
+            ? (EN ? "From €" + EUR(t) + " excl. VAT" : "À partir de " + EUR(t) + HT)
+            : SURDEVIS;
+        }
       });
     }
     var TIERS_DESC = [{ p: 120, d: .20 }, { p: 80, d: .15 }, { p: 40, d: .10 }];
