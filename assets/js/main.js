@@ -37,8 +37,10 @@
     function up() {
       var n = new Date(), day = n.getDay(), h = n.getHours() + n.getMinutes() / 60;
       var open = (day >= 1 && day <= 5) && ((h >= 9 && h < 12) || (h >= 14 && h < 18));
+      /* On n'affiche la pastille que lorsque le showroom est ouvert (pas de signal « fermé » côté client) */
+      s.style.display = open ? "" : "none";
       s.classList.toggle("open", open);
-      t.textContent = open ? (EN ? "Currently open" : "Actuellement ouvert") : (EN ? "Currently closed" : "Actuellement fermé");
+      if (open) t.textContent = EN ? "Currently open" : "Actuellement ouvert";
     }
     up(); setInterval(up, 30000);
   })();
